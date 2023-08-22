@@ -8,4 +8,6 @@ public class TestData {
     private static final String password = "Test123456@";
 
     public static CredentialsModel credentials = new CredentialsModel(login, password);
+
+
 }

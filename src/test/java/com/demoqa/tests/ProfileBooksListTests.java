@@ -3,8 +3,8 @@ package com.demoqa.tests;
 import com.demoqa.models.AddBooksListModel;
 import com.demoqa.models.IsbnModel;
 import com.demoqa.models.LoginResponseModel;
+import com.demoqa.pages.ProfilePage;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.Cookie;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,11 @@ import java.util.List;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.demoqa.tests.TestData.credentials;
 
 public class ProfileBooksListTests extends TestBase {
+
+    ProfilePage profilePage = new ProfilePage();
 
     @Test
     void addBookToProfileTest() {
@@ -32,11 +33,7 @@ public class ProfileBooksListTests extends TestBase {
         booksList.setCollectionOfIsbns(isbnList);
 
         booksApi.addBook(loginResponse, booksList);
-
-        open("/favicon.ico");
-        getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
-        getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
-        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
+        profilePage.openProfileWithCookies(loginResponse);
 
         open("/profile");
         $("[id='see-book-Git Pocket Guide']").shouldBe(visible);
@@ -58,11 +55,7 @@ public class ProfileBooksListTests extends TestBase {
 
         booksApi.addBook(loginResponse, booksList);
         booksApi.deleteBook(loginResponse, booksList);
-
-        open("/favicon.ico");
-        getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
-        getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
-        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
+        profilePage.openProfileWithCookies(loginResponse);
 
         open("/profile");
         $("[id='see-book-Git Pocket Guide']").shouldNot(visible);
