@@ -44,6 +44,27 @@ public class ProfileBooksListTests extends TestBase {
 
     @Test
     void deleteBookFromProfileTest() {
+        LoginResponseModel loginResponse = authorizationApi.login(credentials);
+        booksApi.deleteAllBooks(loginResponse);
 
+        IsbnModel isbnModel = new IsbnModel();
+        isbnModel.setIsbn("9781449325862");
+        List<IsbnModel> isbnList = new ArrayList<>();
+        isbnList.add(isbnModel);
+
+        AddBooksListModel booksList = new AddBooksListModel();
+        booksList.setUserId(loginResponse.getUserId());
+        booksList.setCollectionOfIsbns(isbnList);
+
+        booksApi.addBook(loginResponse, booksList);
+        booksApi.deleteBook(loginResponse, booksList);
+
+        open("/favicon.ico");
+        getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
+        getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
+        getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
+
+        open("/profile");
+        $("[id='see-book-Git Pocket Guide']").shouldNot(visible);
     }
 }

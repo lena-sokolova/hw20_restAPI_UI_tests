@@ -29,4 +29,15 @@ public class BooksApi {
                 .then()
                 .statusCode(201);
     }
+
+    public void deleteBook(LoginResponseModel loginResponse, AddBooksListModel booksList) {
+        given()
+                .contentType(JSON)
+                .header("Authorization", "Bearer " + loginResponse.getToken())
+                .queryParam("UserId", loginResponse.getUserId())
+                .when()
+                .delete("/BookStore/v1/Books")
+                .then()
+                .statusCode(204);
+    }
 }
