@@ -5,13 +5,13 @@ import lombok.Data;
 
 @Data
 public class LoginResponseModel {
-    String userId;
+    private String userId;
     @JsonProperty("username")
-    String userName;
-    String password;
-    String token;
-    String expires;
+    private String userName;
+    private String password;
+    private String token;
+    private String expires;
     @JsonProperty("created_date")
-    String createdDate;
-    String isActive;
+    private String createdDate;
+    private String isActive;
 }

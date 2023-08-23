@@ -1,6 +1,9 @@
 package com.demoqa.tests;
 
+import com.demoqa.api.AuthorizationApi;
+import com.demoqa.api.BooksApi;
 import com.demoqa.models.AddBooksListModel;
+import com.demoqa.models.DeleteBookModel;
 import com.demoqa.models.IsbnModel;
 import com.demoqa.models.LoginResponseModel;
 import com.demoqa.pages.ProfilePage;
@@ -17,6 +20,8 @@ import static com.demoqa.tests.TestData.credentials;
 public class ProfileBooksListTests extends TestBase {
 
     ProfilePage profilePage = new ProfilePage();
+    AuthorizationApi authorizationApi = new AuthorizationApi();
+    BooksApi booksApi = new BooksApi();
 
     @Test
     void addBookToProfileTest() {
@@ -54,7 +59,8 @@ public class ProfileBooksListTests extends TestBase {
         booksList.setCollectionOfIsbns(isbnList);
 
         booksApi.addBook(loginResponse, booksList);
-        booksApi.deleteBook(loginResponse, booksList);
+        booksApi.deleteBook(loginResponse,
+                new DeleteBookModel("9781449325862", loginResponse.getUserId()));
         profilePage.openProfileWithCookies(loginResponse);
 
         open("/profile");

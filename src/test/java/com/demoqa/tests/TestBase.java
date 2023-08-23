@@ -8,9 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 
 public class TestBase {
 
-    AuthorizationApi authorizationApi = new AuthorizationApi();
-    BooksApi booksApi = new BooksApi();
-
     @BeforeAll
     static void setup() {
         Configuration.pageLoadStrategy = "eager";
