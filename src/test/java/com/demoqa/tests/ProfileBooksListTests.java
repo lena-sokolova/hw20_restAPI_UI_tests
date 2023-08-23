@@ -59,8 +59,8 @@ public class ProfileBooksListTests extends TestBase {
         booksList.setCollectionOfIsbns(isbnList);
 
         booksApi.addBook(loginResponse, booksList);
-        booksApi.deleteBook(loginResponse,
-                new DeleteBookModel("9781449325862", loginResponse.getUserId()));
+        DeleteBookModel deleteBookModel = new DeleteBookModel("9781449325862", loginResponse.getUserId());
+        booksApi.deleteBook(loginResponse,deleteBookModel);
         profilePage.openProfileWithCookies(loginResponse);
 
         open("/profile");
